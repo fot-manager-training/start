@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вторая глина — социальная мастерская</title>
+  <style>
+    :root {
+      --bg: #F8F3EA;
+      --accent: #8A402C;
+      --accent-dark: #6f3323;
+      --text: #2e241f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      overflow-wrap: break-word;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: clamp(1.25rem, 5vw, 3rem) clamp(1rem, 5vw, 2rem);
+    }
+
+    /* Появление первого блока за 400 мс */
+    header {
+      margin-bottom: clamp(2rem, 6vw, 3.5rem);
+      animation: appear 400ms ease-out both;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      max-width: 38rem;
+      margin: 0;
+      font-size: clamp(1rem, 3.5vw, 1.25rem);
+    }
+
+    section {
+      margin-bottom: clamp(2rem, 6vw, 3.5rem);
+    }
+
+    h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.25rem, 4.5vw, 1.75rem);
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    li:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact {
+      margin-top: clamp(2rem, 6vw, 3.5rem);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-block;
+      max-width: 100%;
+      padding: 0.9em 1.6em;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: clamp(1rem, 3.5vw, 1.125rem);
+      line-height: 1.2;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.25s ease, color 0.25s ease,
+        transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .btn-primary {
+      border: 2px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(138, 64, 44, 0.25);
+    }
+
+    .btn-secondary {
+      border: 2px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(138, 64, 44, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #5a2a1c;
+      outline-offset: 4px;
+    }
+
+    .details-text {
+      margin-top: 1rem;
+      max-width: 38rem;
+    }
+
+    .details-text[hidden] {
+      display: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      header {
+        animation: none;
+      }
+
+      .btn {
+        transition: background-color 0.01ms linear, color 0.01ms linear;
+      }
+
+      .btn:hover,
+      .btn:active {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Вторая глина</h1>
+      <p>Социальная мастерская для взрослых новичков. Пробные занятия по ручной лепке и групповые мастер-классы.</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>О мастерской</h2>
+        <p>«Вторая глина» — социальная мастерская для взрослых новичков. В мастерской проходят пробные занятия по ручной лепке и групповые мастер-классы.</p>
+      </section>
+
+      <section>
+        <h2>Форматы занятий</h2>
+        <ul>
+          <li>Пробное занятие по ручной лепке</li>
+          <li>Групповой мастер-класс</li>
+        </ul>
+      </section>
+
+      <section class="contact">
+        <h2>Связаться с нами</h2>
+        <div class="actions">
+          <a class="btn btn-primary" href="mailto:hello@example.org">Написать нам</a>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="details-toggle"
+            aria-expanded="false"
+            aria-controls="details-text"
+          >Показать детали</button>
+        </div>
+        <p class="details-text" id="details-text" hidden>
+          Чтобы уточнить расписание и условия, напишите мастерской
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var toggle = document.getElementById('details-toggle');
+      var details = document.getElementById('details-text');
+
+      if (!toggle || !details) {
+        return;
+      }
+
+      toggle.addEventListener('click', function () {
+        var expanded = toggle.getAttribute('aria-expanded') === 'true';
+        var next = !expanded;
+
+        toggle.setAttribute('aria-expanded', String(next));
+        toggle.textContent = next ? 'Скрыть детали' : 'Показать детали';
+        details.hidden = !next;
+      });
+    })();
+  </script>
+</body>
+</html>
