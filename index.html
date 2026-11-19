@@ -2,17 +2,32 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вторая глина — социальная мастерская</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вторая глина — социальная мастерская керамики</title>
   <style>
     :root {
-      --bg: #F8F3EA;
-      --accent: #8A402C;
-      --accent-dark: #6f3323;
-      --text: #2e241f;
+      --bg: #fff9f2;
+      --bg-soft: #faf0e4;
+      --card: #fffdfa;
+      --ink: #522c25;
+      --ink-muted: rgba(82, 44, 37, 0.72);
+      --accent: #c03001;
+      --accent-dark: #9a2600;
+      --line: rgba(82, 44, 37, 0.16);
+      --line-strong: rgba(82, 44, 37, 0.28);
+      --on-dark: #fff9f2;
+      --on-dark-muted: rgba(255, 249, 242, 0.78);
+      --accent-soft: #e8a48f;
+      --radius-sm: 3px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
-    * {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
     }
 
@@ -20,157 +35,588 @@
       -webkit-text-size-adjust: 100%;
     }
 
+    @media (prefers-reduced-motion: no-preference) {
+      html {
+        scroll-behavior: smooth;
+      }
+    }
+
     body {
       margin: 0;
       background: var(--bg);
-      color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.6;
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: clamp(1rem, 0.95rem + 0.3vw, 1.0625rem);
+      line-height: 1.65;
       overflow-wrap: break-word;
     }
 
-    .page {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: clamp(1.25rem, 5vw, 3rem) clamp(1rem, 5vw, 2rem);
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
     }
 
-    /* Появление первого блока за 400 мс */
-    header {
-      margin-bottom: clamp(2rem, 6vw, 3.5rem);
-      animation: appear 400ms ease-out both;
-    }
-
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    h1 {
-      margin: 0 0 1rem;
-      font-size: clamp(2rem, 8vw, 3.5rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-
-    header p {
-      max-width: 38rem;
+    h1,
+    h2,
+    h3 {
       margin: 0;
-      font-size: clamp(1rem, 3.5vw, 1.25rem);
-    }
-
-    section {
-      margin-bottom: clamp(2rem, 6vw, 3.5rem);
-    }
-
-    h2 {
-      margin: 0 0 1rem;
-      font-size: clamp(1.25rem, 4.5vw, 1.75rem);
+      font-family: var(--serif);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
     }
 
     p {
       margin: 0 0 1rem;
     }
 
-    ul {
-      margin: 0;
-      padding-left: 1.5rem;
-    }
-
-    li {
-      margin-bottom: 0.5rem;
-    }
-
-    li:last-child {
+    p:last-child {
       margin-bottom: 0;
     }
 
-    .contact {
-      margin-top: clamp(2rem, 6vw, 3.5rem);
+    a {
+      color: var(--accent);
     }
 
-    .actions {
+    a:hover {
+      color: var(--accent-dark);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding-inline: clamp(1.125rem, 5vw, 2.5rem);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 20;
+      padding: 0.7rem 1rem;
+      background: var(--ink);
+      color: var(--on-dark);
+      border-radius: 0 0 var(--radius-md) 0;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .skip:focus {
+      left: 0;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+
+    .contact :focus-visible {
+      outline-color: var(--on-dark);
+    }
+
+    /* ---------- Первый экран ---------- */
+
+    .hero {
+      background: var(--bg);
+      color: var(--ink);
+      padding-bottom: clamp(2.5rem, 7vw, 4.5rem);
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero .container {
+      padding-top: clamp(1rem, 3vw, 1.75rem);
+    }
+
+    .nav {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.75rem;
+      justify-content: space-between;
+      gap: 0.75rem 1.25rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--line);
     }
 
-    .btn {
+    .brand {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 4vw, 1.35rem);
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .brand:hover {
+      color: var(--accent);
+    }
+
+    .nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1.1rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav ul a {
       display: inline-block;
-      max-width: 100%;
-      padding: 0.9em 1.6em;
-      border-radius: 999px;
+      padding-bottom: 2px;
+      color: var(--ink-muted);
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav ul a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      gap: clamp(1.75rem, 5vw, 3rem);
+      padding-top: clamp(1.75rem, 6vw, 3.5rem);
+    }
+
+    @media (min-width: 820px) {
+      .hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: clamp(2rem, 5vw, 4rem);
+      }
+    }
+
+    .eyebrow {
+      margin: 0 0 0.75rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      font-size: clamp(1rem, 3.5vw, 1.125rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .hero h1 {
+      margin-bottom: 1rem;
+      font-size: clamp(2.6rem, 11vw, 5rem);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .lede {
+      max-width: 34rem;
+      margin-bottom: 1.75rem;
+      font-size: clamp(1.02rem, 3.6vw, 1.25rem);
+      color: var(--ink-muted);
+    }
+
+    .hero-figure {
+      position: relative;
+      margin: 0;
+    }
+
+    .hero-figure img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      background: var(--bg-soft);
+      box-shadow: 0 10px 28px rgba(82, 44, 37, 0.14);
+    }
+
+    @media (min-width: 820px) {
+      .hero-figure img {
+        aspect-ratio: 4 / 5;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-copy > * {
+        animation: rise 600ms ease both;
+      }
+      .hero-copy > *:nth-child(2) {
+        animation-delay: 70ms;
+      }
+      .hero-copy > *:nth-child(3) {
+        animation-delay: 140ms;
+      }
+      .hero-copy > *:nth-child(4) {
+        animation-delay: 210ms;
+      }
+      .hero-figure {
+        animation: fade 800ms ease both 120ms;
+      }
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* ---------- Кнопки ---------- */
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      padding: 0.85em 1.6em;
+      border: 2px solid transparent;
+      border-radius: var(--radius-md);
+      background: var(--accent);
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      font-size: clamp(0.98rem, 3.4vw, 1.05rem);
       line-height: 1.2;
       text-align: center;
       text-decoration: none;
       cursor: pointer;
-      transition: background-color 0.25s ease, color 0.25s ease,
-        transform 0.25s ease, box-shadow 0.25s ease;
+      transition: background-color 0.22s ease, color 0.22s ease,
+        transform 0.22s ease, box-shadow 0.22s ease;
     }
 
-    .btn-primary {
-      border: 2px solid var(--accent);
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
+    .btn:hover {
       background: var(--accent-dark);
-      border-color: var(--accent-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(138, 64, 44, 0.25);
-    }
-
-    .btn-secondary {
-      border: 2px solid var(--accent);
-      background: transparent;
-      color: var(--accent);
-    }
-
-    .btn-secondary:hover {
-      background: var(--accent);
       color: #fff;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(138, 64, 44, 0.2);
+      box-shadow: 0 6px 16px rgba(192, 48, 1, 0.22);
     }
 
     .btn:active {
       transform: translateY(0);
     }
 
-    .btn:focus-visible,
-    a:focus-visible {
-      outline: 3px solid #5a2a1c;
+    .btn:focus-visible {
       outline-offset: 4px;
     }
 
-    .details-text {
-      margin-top: 1rem;
-      max-width: 38rem;
+    .btn-light {
+      background: var(--on-dark);
+      color: var(--ink);
     }
 
-    .details-text[hidden] {
+    .btn-light:hover {
+      background: #fff;
+      color: var(--accent);
+    }
+
+    /* ---------- Разделы ---------- */
+
+    .section {
+      border-top: 1px solid var(--line);
+      padding-block: clamp(2.75rem, 8vw, 5rem);
+      scroll-margin-top: 1rem;
+    }
+
+    .section h2 {
+      margin-bottom: 1.1rem;
+      font-size: clamp(1.85rem, 6vw, 2.9rem);
+    }
+
+    .section-note {
+      max-width: 40rem;
+      margin-bottom: 1.75rem;
+      color: var(--ink-muted);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      gap: clamp(1.5rem, 5vw, 3rem);
+    }
+
+    @media (min-width: 820px) {
+      .about-grid {
+        grid-template-columns: 0.95fr 1.05fr;
+      }
+    }
+
+    .about-figure {
+      margin: 0;
+    }
+
+    .about-figure img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--bg-soft);
+    }
+
+    .about-text p {
+      max-width: 38rem;
+      color: var(--ink-muted);
+    }
+
+    /* ---------- Форматы занятий ---------- */
+
+    .fmt {
+      position: relative;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .fmt-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .fmt-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .fmt-tab {
+      display: inline-block;
+      max-width: 100%;
+      padding: 0.65em 1.05em;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--ink);
+      font-size: clamp(0.9rem, 3.2vw, 1rem);
+      line-height: 1.3;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .fmt-tab:hover {
+      background: var(--card);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    #fmt-trial:checked ~ .fmt-tabs label[for="fmt-trial"],
+    #fmt-group:checked ~ .fmt-tabs label[for="fmt-group"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    #fmt-trial:focus-visible ~ .fmt-tabs label[for="fmt-trial"],
+    #fmt-group:focus-visible ~ .fmt-tabs label[for="fmt-group"] {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .fmt-panel {
+      display: none;
+      max-width: 46rem;
+      padding: clamp(1.25rem, 5vw, 2.25rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--card);
+    }
+
+    #fmt-trial:checked ~ .fmt-panels #panel-trial,
+    #fmt-group:checked ~ .fmt-panels #panel-group {
+      display: block;
+    }
+
+    .fmt-panel h3 {
+      margin-bottom: 0.75rem;
+      font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+    }
+
+    .fmt-panel p {
+      color: var(--ink-muted);
+    }
+
+    .fmt-panel ul {
+      margin: 0 0 1.5rem;
+      padding-left: 1.1rem;
+    }
+
+    .fmt-panel li {
+      margin-bottom: 0.35rem;
+    }
+
+    .fmt-panel li::marker {
+      color: var(--accent);
+    }
+
+    /* ---------- Вопросы ---------- */
+
+    .faq {
+      max-width: 52rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq details {
+      border-top: 1px solid var(--line);
+      padding: 1rem 0;
+    }
+
+    .faq details:first-child {
+      border-top: 0;
+    }
+
+    .faq summary {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: var(--serif);
+      font-size: clamp(1.08rem, 3.8vw, 1.3rem);
+      line-height: 1.3;
+      color: var(--ink);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .faq summary::-webkit-details-marker {
       display: none;
     }
 
+    .faq summary::after {
+      content: "+";
+      flex: none;
+      font-family: var(--sans);
+      font-size: 1.4rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .faq details[open] summary::after {
+      content: "–";
+    }
+
+    .faq summary:hover {
+      color: var(--accent);
+    }
+
+    .faq p {
+      max-width: 44rem;
+      margin: 0.8rem 0 0;
+      color: var(--ink-muted);
+    }
+
+    /* ---------- Связь ---------- */
+
+    .contact {
+      background: var(--ink);
+      color: var(--on-dark);
+      border-top: 0;
+      padding-block: clamp(3rem, 9vw, 5.5rem);
+      scroll-margin-top: 1rem;
+    }
+
+    .contact .eyebrow {
+      color: var(--accent-soft);
+    }
+
+    .contact h2 {
+      color: var(--on-dark);
+    }
+
+    .contact p {
+      max-width: 38rem;
+      color: var(--on-dark-muted);
+    }
+
+    .contact .btn {
+      margin-top: 0.5rem;
+    }
+
+    .contact-mail {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: var(--on-dark-muted);
+    }
+
+    .contact-mail a {
+      color: var(--on-dark);
+    }
+
+    .contact-mail a:hover {
+      color: #fff;
+    }
+
+    /* ---------- Подвал ---------- */
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+      padding-block: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+    }
+
+    .site-footer p {
+      margin: 0;
+    }
+
+    /* ---------- Появление при прокрутке ---------- */
+
+    @media (prefers-reduced-motion: no-preference) {
+      html.js .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.55s ease, transform 0.55s ease;
+      }
+      html.js .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ---------- Уменьшенная анимация ---------- */
+
     @media (prefers-reduced-motion: reduce) {
-      header {
-        animation: none;
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
-
-      .btn {
-        transition: background-color 0.01ms linear, color 0.01ms linear;
-      }
-
       .btn:hover,
       .btn:active {
         transform: none;
@@ -178,64 +624,207 @@
       }
     }
   </style>
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <h1>Вторая глина</h1>
-      <p>Социальная мастерская для взрослых новичков. Пробные занятия по ручной лепке и групповые мастер-классы.</p>
-    </header>
+  <a class="skip" href="#main">Перейти к содержанию</a>
 
-    <main>
-      <section>
-        <h2>О мастерской</h2>
-        <p>«Вторая глина» — социальная мастерская для взрослых новичков. В мастерской проходят пробные занятия по ручной лепке и групповые мастер-классы.</p>
-      </section>
-
-      <section>
-        <h2>Форматы занятий</h2>
+  <header class="hero" id="top">
+    <div class="container">
+      <nav class="nav" aria-label="Разделы страницы">
+        <a class="brand" href="#top">Вторая глина</a>
         <ul>
-          <li>Пробное занятие по ручной лепке</li>
-          <li>Групповой мастер-класс</li>
+          <li><a href="#about">О мастерской</a></li>
+          <li><a href="#formats">Форматы</a></li>
+          <li><a href="#faq">Вопросы</a></li>
+          <li><a href="#contact">Связаться</a></li>
         </ul>
-      </section>
+      </nav>
 
-      <section class="contact">
-        <h2>Связаться с нами</h2>
-        <div class="actions">
-          <a class="btn btn-primary" href="mailto:hello@example.org">Написать нам</a>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            id="details-toggle"
-            aria-expanded="false"
-            aria-controls="details-text"
-          >Показать детали</button>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Социальная мастерская керамики</p>
+          <h1>Вторая глина</h1>
+          <p class="lede">Мастерская для взрослых новичков. Пробное занятие по ручной лепке или групповой мастер-класс — выберите формат и напишите нам.</p>
+          <a class="btn" href="#formats">Выбрать занятие</a>
         </div>
-        <p class="details-text" id="details-text" hidden>
-          Чтобы уточнить расписание и условия, напишите мастерской
-        </p>
-      </section>
-    </main>
-  </div>
+        <figure class="hero-figure">
+          <img
+            src="assets/workshop.webp"
+            alt="Ручная лепка из глины в мастерской"
+            width="1200"
+            height="1500"
+            fetchpriority="high"
+            decoding="async">
+        </figure>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" id="about">
+      <div class="container">
+        <div class="about-grid reveal">
+          <figure class="about-figure">
+            <img
+              src="assets/ceramics.webp"
+              alt="Керамические изделия в мастерской"
+              width="1200"
+              height="900"
+              loading="lazy"
+              decoding="async">
+          </figure>
+          <div class="about-text">
+            <p class="eyebrow">О мастерской</p>
+            <h2>Место, где взрослые начинают знакомство с глиной</h2>
+            <p>«Вторая глина» — социальная мастерская керамики. Здесь занимаются взрослые новички: опыт не требуется, мастерская рассчитана именно на тех, кто только начинает.</p>
+            <p>В мастерской проходят пробные занятия по ручной лепке и групповые мастер-классы. Чтобы выбрать занятие, достаточно написать нам.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="formats">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Форматы занятий</p>
+          <h2>Пробное занятие или мастер-класс</h2>
+          <p class="section-note">В мастерской два формата. Выберите вкладку, чтобы посмотреть подробности, и напишите нам — тема письма подставится сама.</p>
+        </div>
+
+        <div class="formats reveal">
+          <fieldset class="fmt">
+            <legend class="sr-only">Формат занятия</legend>
+
+            <input class="fmt-input" type="radio" name="format" id="fmt-trial" checked>
+            <input class="fmt-input" type="radio" name="format" id="fmt-group">
+
+            <div class="fmt-tabs">
+              <label class="fmt-tab" for="fmt-trial">Пробное занятие по ручной лепке</label>
+              <label class="fmt-tab" for="fmt-group">Групповой мастер-класс</label>
+            </div>
+
+            <div class="fmt-panels">
+              <div class="fmt-panel" id="panel-trial">
+                <h3>Пробное занятие по ручной лепке</h3>
+                <p>Занятие по ручной лепке из глины для взрослых новичков. Подходит, если вы впервые пробуете себя в керамике.</p>
+                <ul>
+                  <li>Формат: пробное занятие</li>
+                  <li>Техника: ручная лепка</li>
+                  <li>Для кого: взрослые новички</li>
+                </ul>
+                <a class="btn" href="mailto:hello@example.org?subject=Пробное%20занятие%20по%20ручной%20лепке">Написать нам</a>
+              </div>
+
+              <div class="fmt-panel" id="panel-group">
+                <h3>Групповой мастер-класс</h3>
+                <p>Мастер-класс проходит в группе. Это второй формат занятий мастерской — для взрослых новичков.</p>
+                <ul>
+                  <li>Формат: групповой мастер-класс</li>
+                  <li>Для кого: взрослые новички</li>
+                </ul>
+                <a class="btn" href="mailto:hello@example.org?subject=Групповой%20мастер-класс">Написать нам</a>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Вопросы</p>
+          <h2>Коротко о главном</h2>
+        </div>
+
+        <div class="faq reveal">
+          <details>
+            <summary>Я никогда не лепил(а) из глины. Мне подойдёт?</summary>
+            <p>Да. «Вторая глина» — мастерская для взрослых новичков, поэтому опыт не требуется. Начать можно с пробного занятия по ручной лепке.</p>
+          </details>
+
+          <details>
+            <summary>Чем пробное занятие отличается от группового мастер-класса?</summary>
+            <p>Пробное занятие посвящено ручной лепке. Групповой мастер-класс — занятие в группе. Если не уверены, какой формат выбрать, напишите нам, и мы подскажем.</p>
+          </details>
+
+          <details>
+            <summary>Как связаться с мастерской?</summary>
+            <p>Напишите на hello@example.org. В письме можно сразу указать интересующий формат — пробное занятие по ручной лепке или групповой мастер-класс.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="container">
+        <div class="contact-inner reveal">
+          <p class="eyebrow">Связь</p>
+          <h2>Написать нам</h2>
+          <p>Выберите формат — пробное занятие по ручной лепке или групповой мастер-класс — и напишите мастерской. Письмо откроется в вашей почтовой программе.</p>
+          <a class="btn btn-light" href="mailto:hello@example.org">Написать нам</a>
+          <p class="contact-mail">Почта мастерской: <a href="mailto:hello@example.org">hello@example.org</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Вторая глина — социальная мастерская керамики. <a href="mailto:hello@example.org">hello@example.org</a></p>
+    </div>
+  </footer>
 
   <script>
     (function () {
-      var toggle = document.getElementById('details-toggle');
-      var details = document.getElementById('details-text');
-
-      if (!toggle || !details) {
+      var items = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+      if (!items.length) {
         return;
       }
 
-      toggle.addEventListener('click', function () {
-        var expanded = toggle.getAttribute('aria-expanded') === 'true';
-        var next = !expanded;
+      var show = function (el) {
+        el.classList.add('is-visible');
+      };
 
-        toggle.setAttribute('aria-expanded', String(next));
-        toggle.textContent = next ? 'Скрыть детали' : 'Показать детали';
-        details.hidden = !next;
-      });
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      if (reduce.matches || !('IntersectionObserver' in window)) {
+        items.forEach(show);
+      } else {
+        var observerFired = false;
+
+        var io = new IntersectionObserver(function (entries) {
+          observerFired = true;
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              show(entry.target);
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+        items.forEach(function (el) {
+          io.observe(el);
+        });
+
+        // Страховка: если наблюдатель не сработал, контент не останется скрытым
+        window.setTimeout(function () {
+          if (!observerFired) {
+            items.forEach(show);
+          }
+        }, 1500);
+      }
+
+      if (typeof reduce.addEventListener === 'function') {
+        reduce.addEventListener('change', function (event) {
+          if (event.matches) {
+            items.forEach(show);
+          }
+        });
+      }
     })();
   </script>
 </body>
